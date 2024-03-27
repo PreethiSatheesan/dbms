@@ -1,0 +1,84 @@
+SQL> 
+SQL>   CREATE TABLE BOOK1
+  2    (Bid numeric(3),Bname varchar(30),Author varchar(30),Lid numeric(3),Price numeric(20),sid num
+eric(3),fid numeric(3),
+  3  constraint pk PRIMARY KEY(Bid));
+
+
+SQL> desc BOOK1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BID                                       NOT NULL NUMBER(3)
+ BNAME                                              VARCHAR2(30)
+ AUTHOR                                             VARCHAR2(30)
+ LID                                                NUMBER(3)
+ PRICE                                              NUMBER(20)
+ SID                                                NUMBER(3)
+ FID                                                NUMBER(3)
+
+
+
+SQL> 
+SQL> 
+SQL>  CREATE TABLE student5
+  2  (Sid numeric(3),Sname varchar(20),no_of_books numeric(2),Bid numeric(3) ,
+  3  constraint pk2 PRIMARY KEY(Sid),constraint pk3 FOREIGN KEY(Bid) references Book1(Bid));
+
+Table created.
+
+
+
+SQL> 
+SQL>  CREATE TABLE faculty1
+  2  (Fid numeric(3),Fname varchar(20),salary numeric(20),Bid numeric(3) ,Sid Numeric(3),
+  3  constraint pk5 PRIMARY KEY(Fid),
+  4  constraint fk3 FOREIGN KEY(Bid) references Book1(Bid),
+  5  constraint fk4 FOREIGN KEY(Sid) references student5(Sid));
+
+Table created.
+
+SQL> CREATE TABLE Librarian
+  2    (Lid numeric(3),Lname varchar(20),Salary numeric(20),constraint pk1 PRIMARY KEY(Lid));
+
+Table created.
+
+
+
+SQL> ALTER TABLE Book1 ADD constraint fk0 FOREIGN KEY(Lid) references Librarian(lid);
+
+Table altered.
+
+
+SQL> ALTER TABLE Book1 ADD constraint fk10 FOREIGN KEY(Sid) references student5(Sid);
+
+Table altered.
+
+SQL> ALTER TABLE Book1 ADD constraint fk11 FOREIGN KEY(Fid) references Faculty(Fid);
+
+Table altered.
+
+
+SQL> 
+SQL> alter table Book1 drop constraint fk11;
+
+Table altered.
+
+SQL>  alter table Book1 drop constraint fk10;
+
+Table altered.
+
+
+SQL> insert into Book1 values(1,'we','abc',1,450,2,3);
+
+1 row created.
+
+SQL> desc Book1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BID                                       NOT NULL NUMBER(3)
+ BNAME                                              VARCHAR2(30)
+ AUTHOR                                             VARCHAR2(30)
+ LID                                                NUMBER(3)
+ PRICE                                              NUMBER(20)
+ SID                                                NUMBER(3)
+ FID                                                NUMBER(3)

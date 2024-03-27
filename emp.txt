@@ -1,0 +1,327 @@
+create table Student456 (studid numeric(3),name varchar(20),class varchar(5),city varchar(12),tot_mark numeric(3),percentage numeric(2), deptid numeric(3),
+constraint pk456 primary key(studid),constraint fk456 foreign key(deptid) references Department45(deptid));
+
+create table Department45(deptid numeric(3),name varchar(20) ,constraint pk45 primary key(deptid));
+
+create table staff45(staffid numeric(3) ,name varchar(20),deptid numeric(3),designation varchar(10),salary numeric(5),city varchar(10),
+ constraint pk43 primary key(staffid),constraint fk23 foreign key(deptid) references Department45(deptid));
+
+
+alter table Student456 drop constraint fk456;
+alter table staff45 drop constraint fk23;
+
+
+create table Company4567(compid numeric(3),name varchar(12),city varchar(15),no_employee numeric(3),e_id numeric(3),constraint pk432 primary key(compid) );
+
+create table Employee5678(empid numeric(3),name varchar(15),c_id numeric(3),designation varchar(10),salary numeric(5),city varchar(10),constraint pk4301 primary key(empid));
+
+insert into Student456 values(101,'Adithya','MCA','Trivandrum',300,60,145);
+1 row created.
+insert into Student456 values(102,'Mahima','MBA','kollam',350,85,150);
+1 row created.
+
+insert into Student456 values(103,'seetha','Mtech','Eranakualm',410,91,155);
+1 row created.
+
+
+> select * from Student456;
+
+ STUDID NAME                 CLASS CITY           TOT_MARK PERCENTAGE
+------- -------------------- ----- ------------ ---------- ----------
+ DEPTID
+-------
+    101 Adithya              MCA   Trivandrum          300         60
+    145
+
+    102 Mahima               MBA   kollam              350         85
+    150
+
+    103 seetha               Mtech Eranakualm          410         91
+    155
+
+insert into Department45 values(145,'MCA');
+insert into Department45 values(150,'MBA');
+insert into Department45 values(155,'Mtech');
+SQL> select * from Department45;
+
+    DEPTID NAME
+---------- --------------------
+       145 MCA
+       150 MBA
+       155 Mtech
+
+
+insert into Company4567 values(225,'infosys','Eranakulam',100,631);
+insert into Company4567 values(250,'sristi ','Trivandrum',4,700);
+insert into Company4567 values(300,'techopark','kollam',201,705);
+
+> select * from Company4567;
+
+ COMPID NAME         CITY            NO_EMPLOYEE       E_ID
+------- ------------ --------------- ----------- ----------
+    225 infosys      Eranakulam              100        631
+    250 sristi       Trivandrum                4        700
+    300 techopark    kollam                  201        705
+
+insert into Employee5678 values(631,'Preethi',225,'Manager',50000,'Trivandrum');
+insert into Employee5678 values(700,'Aiswarya',250,'Programmer',28000,'Kollam');
+insert into Employee5678 values(705,'Salva',300,'clerk',12000,'Eranakulam');
+insert into Employee5678 values(812,'Amritha',225,'clerk',13000,'Eranakulam');
+
+
+SQL>  
+EMP NAME                  C_ID DESIGNATIO     SALARY CITY
+--- --------------- ---------- ---------- ---------- ----------
+631 Preethi                225 Manager         50000 Trivandrum
+700 Aiswarya               250 Programmer      28000 Kollam
+705 Salva                  300 clerk           12000 Eranakulam
+
+
+insert into Staff45 values(181,'Hari',145,'HOD',60000,'Trivandrum');
+insert into Staff45 values(190,'Anjali',150,'AsProf',40000,'Malappuram');
+
+
+
+ STAFFID NAME                     DEPTID DESIGNATIO     SALARY CITY
+-------- -------------------- ---------- ---------- ---------- ----------
+     181 Hari                        145 HOD             60000 Trivandrum
+     190 Anjali                      150 AsProf          40000 Malappuram
+     200 Kiran                       155 Professor       50000 Trivandrum
+
+alter table Student456 add constraint fk01 foreign key(deptid) references Department45(deptid);
+alter table Staff45 add constraint fk02 foreign key(deptid) references Department45(deptid);
+alter table Company4567 add constraint fk03 foreign key(e_id) references Employee5678(empid);
+alter table Employee5678 add constraint fk04 foreign key(c_id) references Company4567(compid);
+Table altered.
+
+update Student456 set class='s1' where studid=102;
+update Student456 set class='s1' where studid=103;
+update Student456 set class='s1' where studid=101;
+
+
+
+
+a) SQL> select * from Student456 order by deptid;
+
+    STUDID NAME                 CITY           TOT_MARK PERCENTAGE     DEPTID
+---------- -------------------- ------------ ---------- ---------- ----------
+CLA
+---
+       101 Adithya              Trivandrum          300         60        145
+s1
+
+       102 Mahima               kollam              350         85        150
+s1
+
+       103 seetha               Eranakualm          410         91        155
+s1
+
+
+b)QL> select name from Employee5678;
+
+AME
+--------------
+Preethi
+Aiswarya
+Salva
+
+c)select * from Staff45 where salary>20000;
+
+
+SQL> select * from Staff45 where salary>20000;
+
+   STAFFID NAME                     DEPTID DESIGNATIO     SALARY CITY
+---------- -------------------- ---------- ---------- ---------- ----------
+       181 Hari                        145 HOD             60000 Trivandrum
+       190 Anjali                      150 AsProf          40000 Malappuram
+       200 Kiran                       155 Professor       50000 Trivandrum
+d) select * from Student456 where percentage>80 and percentage<90;
+
+
+SQL> select * from Student456 where percentage>80 and percentage<90;
+
+    STUDID NAME                 CITY           TOT_MARK PERCENTAGE     DEPTID
+---------- -------------------- ------------ ---------- ---------- ----------
+CLA
+---
+       102 Mahima               kollam              350         85        150
+s1
+
+e)select e.empid,e.name,e.c_id,e.designation,e.salary,e.city  from employee5678 e,company4567 c where e.c_id=c.compid and c.no_employee>3;
+
+
+    EMPID NAME                  C_ID DESIGNATIO     SALARY CITY
+--------- --------------- ---------- ---------- ---------- ----------
+      631 Preethi                225 Manager         50000 Trivandrum
+      700 Aiswarya               250 Programmer      28000 Kollam
+      705 Salva                  300 clerk           12000 Eranakulam
+f)select s.name,s.salary,s.city from Staff45 s,Student456 st where s.salary>25000 and s.city=st.city;
+
+NAME                     SALARY CITY
+-------------------- ---------- ----------
+Kiran                     50000 Trivandrum
+Hari                      60000 Trivandrum
+g)
+select e.empid,e.name,e.c_id,e.designation,e.salary,e.city  from Employee5678 e,Company4567 c where c.no_employee=(select max(no_employee) from Company4567) and e.c_id=c.compid;
+
+
+
+    EMPID NAME                  C_ID DESIGNATIO     SALARY CITY
+--------- --------------- ---------- ---------- ---------- ----------
+      705 Salva                  300 clerk           12000 Eranakulam
+h) update Employee5678 set salary=salary+salary*(8/100)
+where empid in (select empid from Employee5678 e,Company4567 c
+where e.city='Eranakulam'and e.designation='clerk' and e.c_id=c.compid and e.city=c.city);
+
+alter table Employee5678 drop constraint fk04;
+alter table Company4567 drop constraint fk04;
+
+
+
+
+1 row updated.
+
+SQL> select * from Employee5678;
+
+     EMPID NAME                  C_ID DESIGNATIO     SALARY CITY
+---------- --------------- ---------- ---------- ---------- ----------
+       631 Preethi                225 Manager         50000 Trivandrum
+       700 Aiswarya               250 Programmer      28000 Kollam
+       705 Salva                  300 clerk           12000 Eranakulam
+       812 Amritha                225 clerk           14040 Eranakulam
+
+i) update Staff45 set salary=salary+salary*(10 /100) where designation='AsProf';
+
+1 row updated.
+
+SQL> select * from Staff45;
+
+   STAFFID NAME                     DEPTID DESIGNATIO     SALARY CITY
+---------- -------------------- ---------- ---------- ---------- ----------
+       181 Hari                        145 HOD             60000 Trivandrum
+       190 Anjali                      150 AsProf          44000 Malappuram
+       200 Kiran                       155 Professor       50000 Trivandrum
+
+j)select e.name from Employee5678 e ,Company4567 c where e.c_id=c.compid and e.city=c.city;
+
+
+NAME
+---------------
+Amritha
+
+k)select d.name,count(s.name) from Staff45 s,Department45 d where d.deptid=s.deptid group by d.name;
+NAME                 COUNT(S.NAME)
+-------------------- -------------
+MBA                              1
+Mtech                            1
+MCA                              1
+
+l)delete from Company4567 where no_employee<5;
+1 row deleted;
+
+SQL> select * from Company4567;
+
+    COMPID NAME         CITY            NO_EMPLOYEE       E_ID
+---------- ------------ --------------- ----------- ----------
+       225 infosys      Eranakulam              100        631
+       300 techopark    kollam                  201        705
+
+SQL> 
+
+
+
+
+m)select d.deptid,d.name,st.name,s.name from Department45 d ,Student456 st,Staff45 s 
+where d.deptid=s.deptid and d.deptid=st.deptid order by d.deptid;
+
+
+ DEPTID NAME                 NAME                 NAME
+------- -------------------- -------------------- -------------------
+    145 MCA                  Adithya              Hari
+    150 MBA                  Mahima               Anjali
+    155 Mtech                seetha               Kiran
+
+> 
+
+
+
+n)select d.name,s.name,s.salary from Department45 d ,Staff45 s 
+where d.deptid=s.deptid and s.salary=(select max(salary) from Staff45 where deptid=d.deptid);
+NAME                 NAME                     SALARY
+-------------------- -------------------- ----------
+MCA                  Hari                      60000
+MBA                  Anjali                    44000
+Mtech                Kiran                     50000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a)select s.name from Student456 s,Department45 d where d.name='MCA' and s.deptid=d.deptid;
+NAME
+----------------
+Adithya
+
+SQL> 
+
+
+select s.name from Student456 s join Department45 d on s.deptid=d.deptid where d.name='MCA';
+NAME
+----------------
+Adithya
+
+SQL> 
+
+
+
+
+
+b)
+alter table Student456 rename column name to sname;
+
+select sname from Student456 natural join Department45;
+SNAME
+--------------------
+Adithya
+Mahima
+seetha
+
+select * from Student456 natural join Department45;
+    DEPTID     STUDID SNAME                CITY           TOT_MARK PERCENTAGE
+---------- ---------- -------------------- ------------ ---------- ----------
+CLA NAME
+--- --------------------
+       145        101 Adithya              Trivandrum          300         60
+s1  MCA
+
+       150        102 Mahima               kollam              350         85
+s1  MBA
+
+       155        103 seetha               Eranakualm          410         91
+s1  Mtech
+
+c)select * from Employee5678 where c_id in (select compid from Company4567 where name='infosys');
+
+
+
+   EMPID NAME                  C_ID DESIGNATIO     SALARY CITY
+-------- --------------- ---------- ---------- ---------- ----------
+     631 Preethi                225 Manager         50000 Trivandrum
+     812 Amritha                225 clerk           14040 Eranakulam
+

@@ -1,0 +1,157 @@
+ CREATE TABLE STUDENT123(Roll_no numeric(3),S_name varchar(25),S_address varchar(40),
+ constraint pk123 PRIMARY KEY(Roll_no));
+
+CREATE TABLE MARKLIST(Rollno numeric(3),Sub1 numeric(4),Sub2 numeric(4),Sub3 numeric(4),
+ constraint fk123 FOREIGN KEY(Rollno) references STUDENT123(Roll_no));
+
+INSERT INTO STUDENT123 values(1,'Rahul','Pattom');
+INSERT INTO STUDENT123 values(2,'Sachin','Ambalam Mukku');
+INSERT INTO STUDENT123 values(3,'Sourav','Nalanchira');
+
+
+INSERT INTO MARKLIST values(1,78,30,45);
+INSERT INTO MARKLIST values(2,45,65,50);
+INSERT INTO MARKLIST values(3,60,87,33);
+
+
+
+ SELECT * FROM STUDENT123;
+
+   ROLL_NO S_NAME                    S_ADDRESS
+---------- ------------------------- ----------------------------------------
+         1 Rahul                     Pattom
+         2 Sachin                    Ambalam Mukku
+         3 Sourav                    Nalanchira
+
+ SELECT * fROM MARKLIST;
+    ROLLNO       SUB1       SUB2       SUB3
+---------- ---------- ---------- ----------
+         1         78         30         45
+         2         45         65         50
+         3         60         87         33
+
+
+A->ALTER TABLE MARKLIST ADD GRADE VARCHAR(3);
+ SELECT * fROM MARKLIST;
+
+ROLLNO       SUB1       SUB2       SUB3 GRA
+------ ---------- ---------- ---------- ---
+     1         78         30         45
+     2         45         65         50
+     3         60         87         33
+
+
+b->ALTER TABLE MARKLIST DROP COLUMN Sub2;
+
+ 
+ SELECT * fROM MARKLIST;
+
+ROLLNO       SUB1       SUB3 GRA
+------ ---------- ---------- ---
+     1         78         45
+     2         45         50
+     3         60         33
+
+
+c->ALTER TABLE STUDENT123 ADD phone_no numeric(10) constraint ph10 check(length(phone_no)=10);
+desc STUDENT123;
+Name                                      Null?    Type
+----------------------------------------- -------- -------------------------
+ROLL_NO                                   NOT NULL NUMBER(3)
+S_NAME                                             VARCHAR2(25)
+S_ADDRESS                                          VARCHAR2(40)
+PHONE_NO                                           NUMBER(10)
+
+4A->
+SELECT * FROM STUDENT123 WHERE S_address='Pattom';
+
+
+   ROLL_NO S_NAME                    S_ADDRESS
+---------- ------------------------- ----------------------------------------
+  PHONE_NO
+----------
+         1 Rahul                     Pattom
+
+
+
+
+//SELECT Sub1+Sub3 AS TOTAL FROM MARKLIST;
+     TOTAL
+----------
+       123
+        95
+        93
+B->SELECT Sub1+Sub3 AS TOTAL ,(Sub1+Sub3)*2 AS DOUBLE,(Sub1+Sub3)*3 AS THRIBBLE FROM MARKLIST WHERE Rollno=2;
+    TOTAL     DOUBLE   THRIBBLE
+--------- ---------- ----------
+       95        190        285
+
+C->SELECT S_name FROM STUDENT123 WHERE Roll_no=3;
+
+S_NAME
+-------------------------
+Sourav
+
+
+UPDATE STUDENT123 SET phone_no=9048904850 where Roll_no=1;
+UPDATE STUDENT123 SET phone_no=9048904844 where Roll_no=2;
+UPDATE STUDENT123 SET phone_no=9048904811 where Roll_no=3;
+
+SELECT * FROM STUDENT123;
+
+
+   ROLL_NO S_NAME                    S_ADDRESS
+---------- ------------------------- -------------------------
+  PHONE_NO
+----------
+         1 Rahul                     Pattom
+9048904850
+
+         2 Sachin                    Ambalam Mukku
+9048904844
+
+         3 Sourav                    Nalanchira
+9048904811
+
+
+D->SELECT phone_no FROM STUDENT123 WHERE S_name='Sachin';
+  PHONE_NO
+----------
+9048904844
+
+E-> SELECT min(Sub1),max(Sub1) FROM MARKLIST;
+ MIN(SUB1)  MAX(SUB1)
+---------- ----------
+        45         78
+
+F-> SELECT min(Sub3),max(Sub3),avg(Sub3) FROM MARKLIST;
+
+MIN(SUB3)  MAX(SUB3)  AVG(SUB3)
+--------- ---------- ----------
+       33         50 42.6666667
+
+G->select count(Roll_no) from STUDENT123;
+COUNT(ROLL_NO)
+--------------
+             3
+
+select count(Roll_no) from STUDENT123 WHERE S_address='Nalanchira';
+
+COUNT(ROLL_NO)
+--------------
+             1
+
+
+H->select count(distinct sub1) from MARKLIST;
+      SUB1
+----------
+        78
+        45
+        60
+
+
+SQL> select count(distinct sub1) from MARKLIST;
+
+COUNT(DISTINCTSUB1)
+-------------------
+                  3

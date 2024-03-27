@@ -1,0 +1,80 @@
+create table student77(id numeric(3),name varchar(12) ,mark numeric(4),constraint pk77 primary key(id));
+Table created.
+ insert into student77 values(101,'Aiswarya',95);
+
+1 row created.
+
+ insert into student77 values(122,'Rahul',82);
+
+1 row created.
+
+ insert into student77 values(131,'Surya',90);
+
+1 row created.
+
+
+a) commit;
+
+Commit complete.
+
+
+desc student77;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(3)
+ NAME                                               VARCHAR2(12)
+ MARK                                               NUMBER(4)
+
+select * from student77;
+
+        ID NAME               MARK
+---------- ------------ ----------
+       101 Aiswarya             95
+       122 Rahul                82
+       131 Surya                90
+
+
+SQL> savepoint o;
+
+Savepoint created.
+
+SQL> insert into student77 values(145,'Arya',80);
+
+1 row created.
+
+SQL>  select * from student77;
+
+        ID NAME               MARK
+---------- ------------ ----------
+       101 Aiswarya             95
+       122 Rahul                82
+       131 Surya                90
+       145 Arya                 80
+
+SQL> rollback to o;
+
+Rollback complete.
+
+SQL>  select * from student77;
+
+        ID NAME               MARK
+---------- ------------ ----------
+       101 Aiswarya             95
+       122 Rahul                82
+       131 Surya                90
+
+
+
+create role new_student77;
+Role created.
+
+grant select on student77 to new_student;
+Grant succeeded.
+ 
+grant update(name) on student77 to new_student;
+
+ succeeded.
+Grant succeeded.
+
+revoke select on student77 from new_student;
+revoke update on student77 from new_student;
