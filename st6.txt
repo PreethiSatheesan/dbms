@@ -65,10 +65,10 @@ SQL>  select * from student77;
 
 
 
-create role new_student77;
+c)create role new_student77;
 Role created.
 
-grant select on student77 to new_student;
+b)grant select on student77 to new_student;
 Grant succeeded.
  
 grant update(name) on student77 to new_student;
@@ -77,4 +77,7 @@ grant update(name) on student77 to new_student;
 Grant succeeded.
 
 revoke select on student77 from new_student;
+
+Revoke succeeded.
 revoke update on student77 from new_student;
+Revoke succeeded.
