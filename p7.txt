@@ -1,0 +1,50 @@
+create table employee77(empid numeric(4),name varchar(12),c_id numeric(3),designation varchar(11),
+salary numeric(6),city varchar(12),constraint pk18 primary key(empid));
+
+desc employee77;
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ---------------------------
+ EMPID                                     NOT NULL NUMBER(4)
+ NAME                                               VARCHAR2(12)
+ C_ID                                               NUMBER(3)
+ DESIGNATION                                        VARCHAR2(11)
+ SALARY                                             NUMBER(6)
+ CITY                                               VARCHAR2(12)
+
+insert into employee77 values(1100,'Arun',234,'Manager',50000,'TVM');
+insert into employee77 values(1101,'Kiran',235,'clerk',18000,'TVM');
+1 row created.
+
+1 row created.
+
+select * from employee77;
+
+    EMPID NAME               C_ID DESIGNATION     SALARY CITY
+--------- ------------ ---------- ----------- ---------- ------------
+     1100 Arun                234 Manager          50000 TVM
+     1101 Kiran               235 clerk            18000 TVM
+
+a)create view manager777 as select * from employee77 where designation='Manager';
+View created.
+update manager777 set salary=salary+salary * (10/100);
+
+1 row updated.
+
+select * from manager777;
+
+    EMPID NAME               C_ID DESIGNATION     SALARY CITY
+--------- ------------ ---------- ----------- ---------- ------------
+     1100 Arun                234 Manager          55000 TVM
+
+
+
+SQL> select * from employee77;
+
+     EMPID NAME               C_ID DESIGNATION     SALARY CITY
+---------- ------------ ---------- ----------- ---------- ------------
+      1100 Arun                234 Manager          55000 TVM
+      1101 Kiran               235 clerk            18000 TVM
+
+SQL> 
+
