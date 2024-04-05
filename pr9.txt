@@ -1,0 +1,100 @@
+create table hotel22(hotelid number(4),name varchar(10),no_of_rooms number(3),rate_day number(5),constraint pk22 primary key(hotelid));
+
+create table guest22(guestid number(4),name varchar(10),no_of_days number(2),hotelid number(4),constraint pk44 primary key(guestid),constraint pk66 foreign key(hotelid) references hotel22(hotelid));
+
+SQL> desc hotel22;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HOTELID                                   NOT NULL NUMBER(4)
+ NAME                                               VARCHAR2(10)
+ NO_OF_ROOMS                                        NUMBER(3)
+ RATE_DAY                                           NUMBER(5)
+
+SQL> desc guest22;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ GUESTID                                   NOT NULL NUMBER(4)
+ NAME                                               VARCHAR2(10)
+ NO_OF_DAYS                                         NUMBER(2)
+ HOTELID                                            NUMBER(4)
+
+insert into hotel22 values(1011,'Nikunjam',100,1500);
+insert into hotel22 values(1012,'Mariat',60,400);
+insert into hotel22 values(1013,'Galaxy',100,900);
+
+
+  HOTELID NAME       NO_OF_ROOMS   RATE_DAY
+--------- ---------- ----------- ----------
+     1011 Nikunjam           100       1500
+     1012 Mariat              60        400
+     1013 Galaxy             100        900
+
+
+insert into guest22 values(2309,'Akash',3,1013);
+insert into guest22 values(2310,'Yadu',1,1012);
+insert into guest22 values(2311,'Sulthan',2,1011);
+
+
+  GUESTID NAME       NO_OF_DAYS    HOTELID
+--------- ---------- ---------- ----------
+     2309 Akash               3       1013
+     2310 Yadu                1       1012
+     2311 Sulthan             2       1011
+
+
+set serveroutput on
+
+declare 
+rent number(5);
+cursor  c_rent is select g.guestid,g.name, g.no_of_days,g.hotelid,h.rate_day from guest22 g,hotel22 h where h.hotelid=g.hotelid; 
+id guest22.guestid % type;
+name guest22.name % type;
+days guest22.no_of_days % type;
+hotel_id  guest22.hotelid % type;
+rate hotel22.rate_day % type;
+begin
+open c_rent;
+dbms_output.put_line('ID'||'    '||'Name'||'     '||'Days'||'     '||'Rate/day'||'     '||'Hotel_id'||'      '||'Rate');
+loop
+fetch c_rent into id ,name,days,hotel_id, rate;
+exit when c_rent % notfound;
+rent:=0;
+rent:=days*rate;
+dbms_output.put_line(Id||'     '||Name||'     ' ||Days||'     '||rate||'       '||hotel_id||'       '  ||rent);
+end loop;
+close c_rent;
+end;
+/
+
+
+ID    Name     Days     Rate/day     Hotel_id      Rate
+2309     Akash     3     900       1013       2700
+2310     Yadu     1     400       1012       400
+2311     Sulthan     2     1500       1011       3000
+
+
+
+declare
+cursor c_details is select * from hotel22 where rate_day>500;
+id hotel22.hotelid % type;
+name hotel22.name % type;
+no_room hotel22.no_of_rooms % type;
+r_day hotel22.rate_day % type;
+begin
+open c_details;
+dbms_output.put_line('Id'||'     '||'Name'||'    '||'No_of_rooms'||'    '||'Rate/day');
+loop
+fetch c_details into id ,name,no_room,r_day;
+exit when c_details % notfound;
+dbms_output.put_line(id||'     '||name||'    '||no_room||'    '||r_day);
+end loop;
+close c_details;
+end;
+/
+
+Id     Name    No_of_rooms    Rate/day
+1011     Nikunjam    100    1500
+1013     Galaxy    100    900
+
+PL/SQL procedure successfully completed.
+
